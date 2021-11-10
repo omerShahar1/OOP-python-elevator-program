@@ -16,6 +16,11 @@ for i in data['_elevators']:
                     i['_startTime'], i['_stopTime'])
     Building.add_elevator(b, elev)
 
+
 # open csv file (calls)
 with open('calls.csv', 'r') as csv_file:
     csv_reader = csv.reader(csv_file)
+
+# go over all the lines in the csv file
+for i in csv_reader.line_num:
+    row = next(csv_reader)
