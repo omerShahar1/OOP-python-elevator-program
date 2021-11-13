@@ -17,7 +17,7 @@ def best_elevator(b: Building, call: Call):
     if len(b.elevators) == 1:  # if we only have 1 elevator, return it
         return answer
 
-    for elev in len(b.elevators):
+    for elev in b.elevators:
         elev.calls.append(call)
         newAnswer = check_elevator_time(elev)
         elev.calls.remove(call)
@@ -279,8 +279,8 @@ with open('calls.csv', 'r') as csv_file:
     csv_reader = csv.reader(csv_file)
 
 # go over all the lines in the csv file
-for i in csv_reader.line_num:
+for i in csv_reader:
     row = next(csv_reader)
     if (row[2] <= b.maxFloor) & (row[2] >= b.minFloor) & (row[3] <= b.maxFloor) & (row[3] >= b.minFloor):
         call = Call(row[1], row[2], row[3])
-        answer = best_elevator(call)
+        answer = best_elevator(b, call)
