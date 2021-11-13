@@ -8,6 +8,23 @@
 
 
 @how we choose the best elevator?
+* if all calls are "up" type  then go to lowest src floor and go up.
+* if all calls are "down" type  then go to highest src floor and go down.
+* if we have both type:
+  * if all the calls src floor are above us (above floor 0) then start with the up calls and then move on to the down calls.
+  * if all the calls src floor are under us (under floor 0) then start with the down calls and then move on to the up calls.
+  * if none of the above is true then find the highest down src floor and the lowest up src floor:
+    * if highest down src floor is under 0:
+      * go down and then go the lowest up src floor and start go up
+    * if lowest up src floor is above 0:
+      * go up and then go the highest down src floor and start go down
+    * if none of them is true:
+      * if highest down src floor is closer:
+        * go the that floor and then go down and then go the lowest up src floor and start go up
+      * if lowest up src floor is closer:
+        * go the that floor and then go up and then go the highest down src floor and start go down
+
+
 @function to make:
   1. calculate time for moving. (accept two floors number and an elevator. return the time it will take the elevator to reach the dest floor from the src floor). 
   2. go up only (all the calls are up type)
