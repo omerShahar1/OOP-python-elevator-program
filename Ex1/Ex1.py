@@ -281,6 +281,6 @@ with open('calls.csv', 'r') as csv_file:
 # go over all the lines in the csv file
 for i in csv_reader:
     row = next(csv_reader)
-    if (row[2] <= b.maxFloor) & (row[2] >= b.minFloor) & (row[3] <= b.maxFloor) & (row[3] >= b.minFloor):
+    if (row[2] <= b.maxFloor) and (row[2] >= b.minFloor) and (row[3] <= b.maxFloor) and (row[3] >= b.minFloor):
         call = Call(row[1], row[2], row[3])
         answer = best_elevator(b, call)
