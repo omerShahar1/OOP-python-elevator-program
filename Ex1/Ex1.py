@@ -1,6 +1,5 @@
 import json
 import csv
-import math
 from call import Call
 from elevator import Elevator
 from building import Building
@@ -28,26 +27,28 @@ def best_elevator(b: Building, call: Call):
 
 
 def check_elevator_time(elev: Elevator):
+    """
+    :param elev:
+    :return: return the new time it will take the elevator to answer all its calls
+    """
     if check_type(1, elev):
         return up(elev)
     if check_type(0, elev):
         return down(elev)
     if check_above(elev):
-        return calls_are_above(elev)
+        return up_down(elev)
     if check_under(elev):
-        return calls_are_under(elev)
-
-
+        return down_up(elev)
     highDown = find_highest_down_call(elev)
     lowUp = find_lowest_up_call(elev)
     if highDown <= 0:
-        return down_up(highDown, lowUp,  elev)
+        return down_up(elev)
     if lowUp >= 0:
-        return up_down(highDown, lowUp,  elev)
+        return up_down(elev)
     if dist(0, highDown) < dist(0, lowUp):
-        return down_up(highDown, lowUp,  elev)
+        return down_up(elev)
     else:
-        return up_down(highDown, lowUp,  elev)
+        return up_down(elev)
 
 
 
@@ -77,34 +78,75 @@ def check_time(elev: Elevator, current, next):
     return (dist / elev.speed + elev.startTime + elev.stopTime + elev.closeTime + elev.stopTime)
 
 
-def check_type(elevator: Elevator):
-    pass
+def check_type(direction:int, elevator: Elevator):
+    """
+    :param elevator:
+    :return: return true if all calls in the elevator list are 'direction' type
+    """
+    for i in elevator.calls:
+        if i.type() != direction:
+            return False
+    return True
 
 
 def up(elevator: Elevator):
-    pass
+    """
+    :param elevator:
+    :return: return the time it will take for only up calls
+    """
+    upList = create_up_list(elevator)
+    current = 0
+    time = 0
+
+    if current != upList[0]:
+        time = time + check_time(elevator, current, upList[0])
+        current = upList[0]
+    upList.pop(0)
+    for floor in upList:
+        time = time + check_time(elevator, current, floor)
+        current = floor
+    return time
 
 
 def down(elevator: Elevator):
-    pass
+    """
+    :param elevator:
+    :return: return the time it will take for only down calls
+    """
+    downList = create_down_list(elevator)
+    current = 0
+    time = 0
+
+    if current != downList[0]:
+        time = time + check_time(elevator, current, downList[0])
+        current = downList[0]
+    downList.pop(0)
+    for floor in downList:
+        time = time + check_time(elevator, current, floor)
+        current = floor
+    return time
 
 
 def check_above(elevator: Elevator):
-    pass
+    """""
+    :param elevator:
+    :return: check if all the src and dest floors are above 0
+    """
+    for i in elevator.calls:
+        if i.src < 0 or i.dest < 0:
+            return False
+    return True
 
 
 def check_under(elevator: Elevator):
-    pass
-
-
-def calls_are_above(elevator: Elevator):
-    pass
-
-
-def calls_are_under(elevator: Elevator):
-    pass
-
-#tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    """""
+    :param elevator:
+    :return: check if all the src and dest floors are under 0
+    """
+    for i in elevator.calls:
+        if i.src > 0 or i.dest > 0:
+            return False
+    return True
 
 
 def find_highest_down_call(elevator: Elevator):
@@ -143,18 +185,81 @@ def find_lowest_up_call(elevator: Elevator):
     return answer
 
 
-def up_down(highDown:int, lowUp:int, elevator: Elevator):
+def up_down(elevator: Elevator):
+    upList = create_up_list(elevator)
+    downList = create_down_list(elevator)
     current = 0
     time = 0
-    if current != lowUp:
-        time = time + check_time(elevator, 0, lowUp)
-        current = lowUp
+
+    if current != upList[0]:
+        time = time + check_time(elevator, current, upList[0])
+        current = upList[0]
+    upList.pop(0)
+    for floor in upList:
+        time = time + check_time(elevator, current, floor)
+        current = floor
+
+    if current != downList[0]:
+        time = time + check_time(elevator, current, downList[0])
+        current = downList[0]
+    downList.pop(0)
+    for floor in downList:
+        time = time + check_time(elevator, current, floor)
+        current = floor
+    return time
 
 
+def down_up(elevator: Elevator):
+    upList = create_up_list(elevator)
+    downList = create_down_list(elevator)
+    current = 0
+    time = 0
+
+    if current != downList[0]:
+        time = time + check_time(elevator, current, downList[0])
+        current = downList[0]
+    downList.pop(0)
+    for floor in downList:
+        time = time + check_time(elevator, current, floor)
+        current = floor
+
+    if current != upList[0]:
+        time = time + check_time(elevator, current, upList[0])
+        current = upList[0]
+    upList.pop(0)
+    for floor in upList:
+        time = time + check_time(elevator, current, floor)
+        current = floor
+    return time
 
 
-def down_up(highDown:int, lowUp:int, elevator: Elevator):
-    return 0
+def create_up_list(elevator:Elevator):
+    """
+    :param elevator:
+    :return: sorted list (small to big) of floors for the elevator while going up
+    """
+    list = []
+    for call in elevator.calls:
+        if call.type() == 1:
+            list.append(call.src)
+            list.append(call.dest)
+    list.sort()
+    return list
+
+
+def create_down_list(elevator:Elevator):
+    """
+    :param elevator:
+    :return: sorted list (big to small) of floors for the elevator while going down
+    """
+    list = []
+    for call in elevator.calls:
+        if call.type() == 0:
+            list.append(call.src)
+            list.append(call.dest)
+    list.sort()
+    list.reverse()
+    return list
 
 
 # opening JSON file (Building.json) and load it in to a dictionary (data)
@@ -176,5 +281,6 @@ with open('calls.csv', 'r') as csv_file:
 # go over all the lines in the csv file
 for i in csv_reader.line_num:
     row = next(csv_reader)
-    call = Call(row[1], row[2], row[3])
-    answer = best_elevator(call)
+    if (row[2] <= b.maxFloor) & (row[2] >= b.minFloor) & (row[3] <= b.maxFloor) & (row[3] >= b.minFloor):
+        call = Call(row[1], row[2], row[3])
+        answer = best_elevator(call)
