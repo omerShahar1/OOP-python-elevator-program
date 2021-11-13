@@ -13,15 +13,16 @@
 * if we have both type:
   * if all the calls src floor are above us (above floor 0) then start with the up calls and then move on to the down calls.
   * if all the calls src floor are under us (under floor 0) then start with the down calls and then move on to the up calls.
-  * if none of the above is true then find closest src floor. then check the call type and do as followed:
-    * if type is up then:
-      * if the src floor is above us then go to the floor, finish all up floors and then go down to finish all down floors
-      * if the src floor is under us then start to go down while compliting every down call with src floor under us (under floor 0) untill we reach the lowest dest floor from the
-        selected down calls. then go up, to finish all the up calls and then go down again finishing all down calls.
-    * if type is down then:
-      * if the src floor is under us then go to the floor, finish all down floors and then go up to finish all up floors
-      * if the src floor is above us then start to go up while compliting every up call with src floor above us (above floor 0) untill we reach the highest dest floor from the
-        selected up calls. then go down, to finish all the down calls and then go up again finishing all up calls.
+  * if none of the above is true then find the highest down src floor and the lowest up src floor:
+    * if highest down src floor is under 0:
+      * go down and then go the lowest up src floor and start go up
+    * if lowest up src floor is above 0:
+      * go up and then go the highest down src floor and start go down
+    * if none of them is true:
+      * if highest down src floor is closer:
+        * go the that floor and then go down and then go the lowest up src floor and start go up
+      * if lowest up src floor is closer:
+        * go the that floor and then go up and then go the highest down src floor and start go down
 
 
 @function to make:
