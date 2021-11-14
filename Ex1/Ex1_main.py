@@ -261,24 +261,31 @@ def create_down_list(elevator: Elevator) -> list:
     return list
 
 
-# opening JSON file (Building.json) and load it in to a dictionary (data)
-with open('Building.json') as json_file:
-    data = json.load(json_file)
+if __name__ == '__main__':
 
-# create building b with the data from the json file
-b = Building(data['_minFloor'], data['_maxFloor'])
-# add elevators to the building object
-for i in data['_elevators']:
-    elev = Elevator(i['_id'], i['_speed'], i['_minFloor'], i['_maxFloor'], i['_closeTime'], i['_openTime'], i['_startTime'], i['_stopTime'])
-    Building.add_elevator(b, elev)
+    # opening JSON file (Building.json) and load it in to a dictionary (data)
+    with open('Building.json') as json_file:
+        data = json.load(json_file)
+        # create building b with the data from the json file
+        b = Building(data['_minFloor'], data['_maxFloor'])
+        # add elevators to the building object
+        for i in data['_elevators']:
+            elev = Elevator(i['_id'], i['_speed'], i['_minFloor'], i['_maxFloor'], i['_closeTime'], i['_openTime'],
+                            i['_startTime'], i['_stopTime'])
+            Building.add_elevator(b, elev)
 
-# open csv file (calls)
-with open('calls.csv', 'r') as csv_file:
-    csv_reader = csv.reader(csv_file)
+    # open csv file (calls)
+    calls_file = open('Calls_a.csv', 'r')
+    csv_reader = csv.reader(calls_file)
 
-# go over all the lines in the csv file
-for row in csv_reader:
-    if (row[2] <= b.maxFloor) and (row[2] >= b.minFloor) and (row[3] <= b.maxFloor) and (row[3] >= b.minFloor):
-        call = Call(row[1], row[2], row[3])
-        answer = best_elevator(b, call)
+    with open('output.csv', 'w') as output:
+        csv_writer = csv.writer(output)
+        # go over all the lines in the csv file
+        for row in csv_reader:
+            if b.maxFloor >= int(row[2]) >= b.minFloor and b.maxFloor >= int(row[3]) >= b.minFloor:
+                call = Call(float(row[1]), int(row[2]), int(row[3]))
+                answer = best_elevator(b, call)
+                row[4] = answer
+        csv_writer.writerow(row)
 
+    calls_file.close()
