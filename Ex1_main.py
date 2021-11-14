@@ -1,7 +1,5 @@
 import json
 import csv
-import sys
-
 import pandas
 from call import Call
 from elevator import Elevator
@@ -264,12 +262,10 @@ def create_down_list(elevator: Elevator) -> list:
     return list
 
 
-if __name__ == '__main__':
-
-    args1 = sys.argv[1:]
-    args2 = sys.argv[2:]
-    args3 = sys.argv[3:]
-
+def main(a: list):
+    args1 = a[1]
+    args2 = a[2]
+    args3 = a[3]
     # opening JSON file (Building.json) and load it in to a dictionary (data)
     with open(args1) as json_file:
         data = json.load(json_file)
