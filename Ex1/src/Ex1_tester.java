@@ -1,4 +1,4 @@
-import ex1.Ex1_main;
+import Ex1.Ex1_main;
 
 public class Ex1_tester {
     public static void main(String[] args) {
