@@ -3,20 +3,6 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="\Ex1\Calls_a.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\Ex1\Calls_b.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\Ex1\data\Ex1_Calls_case_2_a.csv">
           <value>
             <Attribute>
@@ -53,20 +39,6 @@
           </value>
         </entry>
         <entry key="\Ex1\data\Ex1_input\Ex1_Calls\Calls_d.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\Ex1\fileC.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\Ex1\out.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
