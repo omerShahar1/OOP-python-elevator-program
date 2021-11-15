@@ -12,38 +12,124 @@ def best_elevator(b: Building, call: Call) -> int:
         return 0
 
     answer = 0
-    newTime = 0
-    bestTime = elevator_time(b.elevators[0], call)
+    bestTime = b.elevators[0].time
 
     for elev in b.elevators:
-        newTime = elevator_time(elev, call)
-        if newTime < bestTime:
+        list1 = elev.upList.copy()
+        list2 = elev.downList.copy()
+        list3 = elev.newUpList.copy()
+        list4 = elev.newDownList.copy()
+
+        elevator_time(elev, call)
+        if elev.time < bestTime:
             answer = elev.id
-            bestTime = newTime
+            bestTime = elev.time
+        elev.time = 0.0
+        elev.upList = list1.copy()
+        elev.downList = list2.copy()
+        elev.newUpList = list3.copy()
+        elev.newDownList = list4.copy()
+        if len(elev.calls) != 0:
+            b.elevators[answer].sign = b.elevators[answer].calls[0].type
+
 
     # add the new call to the selected elevator calls list and return the elevator number.
     b.elevators[answer].calls.append(call)
     return answer
 
 
-def elevator_time(elevator: Elevator, call:Call):
+def elevator_time(elevator: Elevator, call: Call):
+    if len(elevator.calls) == 0:
+        return case_0(elevator, call)
+
+    if call.type == 1 and elevator.sign == 1 and call.src > elevator.current:
+        return case_1_up(elevator, call)
+
+    if call.type == -1 and elevator.sign == -1 and call.src < elevator.current:
+        return case_1_down(elevator, call)
+    return case_2(elevator, call)
+
+
+def case_0(elevator: Elevator, call: Call):
     pass
 
 
-def check_time(elev: Elevator, current: int, next: int) -> float:
-    """
-    :param elev: elevator we are testing
-    :param current: current floor of elevator
-    :param next: next floor of elevator
-    :return: the total time it will take the elevator to get to 'next' floor
-    """
+def case_1_up(elevator: Elevator, call: Call):
+    pass
+
+
+def case_1_down(elevator: Elevator, call: Call):
+    pass
+
+
+def case_2(elevator: Elevator, call: Call):
+    if elevator.sign == 1:
+        goUp(elevator, 0.0)
+    else:
+        goDown(elevator, 0.0)
+
+
+def insert_floors(elevator: Elevator, call: Call):
+    # if the time to insert the call hasn't arrived yet, then stop
+    if call.time < elevator.time:
+        return
+    if call.type == 1:  # if call type up
+        if elevator.current > call.src:
+            elevator.newUpList.append(call.src)
+            elevator.newUpList.append(call.dest)
+            elevator.newUpList.sort()
+        else:
+            elevator.upList.append(call.src)
+            elevator.upList.append(call.dest)
+            elevator.upList.sort()
+    else:  # if call type down
+        if elevator.current < call.src:
+            elevator.newDownList.append(call.src)
+            elevator.newDownList.append(call.dest)
+            elevator.newDownList.sort()
+            elevator.newDownList.reverse()
+        else:
+            elevator.downList.append(call.src)
+            elevator.downList.append(call.dest)
+            elevator.downList.sort()
+            elevator.newDownList.reverse()
+    call.start = False
+
+
+def goDown(elevator: Elevator, call: Call):
+    elevator.sign = -1
+    for floor in elevator.downList:
+        if call.start:
+            insert_floors(elevator, call)
+        if len(elevator.upList) == 0:
+            Elevator.switch_down_list(elevator)
+            goUp(elevator)
+        if elevator.current != floor:
+            move(elevator, elevator.current, floor)
+        elevator.current = floor
+        elevator.downList.pop(0)
+
+
+def goUp(elevator: Elevator, call: Call):
+    elevator.sign = 1
+    for floor in elevator.upList:
+        if call.start:
+            insert_floors(elevator, call)
+        if len(elevator.upList) == 0:
+            Elevator.switch_up_list(elevator)
+            goDown(elevator)
+        if elevator.current != floor:
+            move(elevator, elevator.current, floor)
+        elevator.current = floor
+        elevator.upList.pop(0)
+
+
+def move(elev: Elevator, current: int, next: int):
     if current > next:
         dist = current - next
     else:
         dist = next - current
-    return (dist / elev.speed) + elev.startTime + elev.stopTime + elev.closeTime + elev.stopTime
-
-
+    elev.time = elev.time + (dist / elev.speed) + elev.startTime + elev.stopTime + elev.closeTime + elev.stopTime
 
 
 def main(a: list):
