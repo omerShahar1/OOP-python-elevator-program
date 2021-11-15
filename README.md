@@ -7,26 +7,48 @@
 * after choosing the corect elevator we will insert the call to the specific elevator "calls list" and write the elevator id in the output csv file.
 
 
-@how we choose the best elevator?
-* if all calls are "up" type  then go to lowest src floor and go up.
-* if all calls are "down" type  then go to highest src floor and go down.
-* if we have both type:
-  * if all the calls src floor are above us (above floor 0) then start with the up calls and then move on to the down calls.
-  * if all the calls src floor are under us (under floor 0) then start with the down calls and then move on to the up calls.
-  * if none of the above is true then find the highest down src floor and the lowest up src floor:
-    * if highest down src floor is under 0:
-      * go down and then go the lowest up src floor and start go up
-    * if lowest up src floor is above 0:
-      * go up and then go the highest down src floor and start go down
-    * if none of them is true:
-      * if highest down src floor is closer:
-        * go the that floor and then go down and then go the lowest up src floor and start go up
-      * if lowest up src floor is closer:
-        * go the that floor and then go up and then go the highest down src floor and start go down
 
 
-@function to make:
-  1. calculate time for moving. (accept two floors number and an elevator. return the time it will take the elevator to reach the dest floor from the src floor). 
-  2. go up only (all the calls are up type)
-  3. go down only (all the calls are down only)
-  4. ......
+
+
+how we choose the best elevator?
+
+case 0: elevator has 0 calls. return the time it will take to get to the src floor and then to the dest floor
+
+case 1_up: elevator sign and call type are both up. the src floor of the call is above the elevator current floor.
+           insert the two new floors in the elevator journey up
+
+case 1_down: elevator sign and call type are both down. the src floor of the call is under the elevator current floor.
+           insert the two new floors in the elevator journey down
+
+case 2_up: elevator sign and call type are both up. the src floor of the call is under the elevator current floor.
+           finish the journey up and then go down to the src floor, and then go up to the dest floor.
+
+case 2_down: elevator sign and call type are both down. the src floor of the call is above the elevator current floor.
+           finish the journey down and then go up to the src floor, and then go down to the dest floor.
+
+case 3_up: elevator sign is down and call type is up.
+           finish the journey down and then go to the src floor, and then go up to the dest floor.
+
+case 3_down: elevator sign is up and call type is down.
+           finish the journey up and then go to the src floor, and then go down to the dest floor.
+
+
+
+
+
+
+* best_elevator(): receive the new call and building. return the id of the elevator with the best time.
+    * if building have only 1 elevator, return id of elevator
+    * if building has more than 1, go over all the elevators and return the id of the nest one
+
+* elevator_time(): recieve an elevator and the new call and return how much time it will take the elevator to complete all its calls
+  with the new one.
+* case0(): elevator doesn't have calls yet. check time from elevator current floor (floor 0) to the new call src and to dest.
+
+* case1_up(): new call and the elevator are up type. time stemp on the call allow the elevator to reach its src and dest floors.
+  organize the floors in a sorted list of integers and return time it takes the elevator to reach all of them.
+
+* case1_down(): new call and the elevator are down type. time stemp on the call allow the elevator to reach its src and dest floors.
+  organize the floors in a sorted list of integers and return time it takes the elevator to reach all of them.
+* ........
