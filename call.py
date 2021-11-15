@@ -3,6 +3,7 @@ class Call:
         self.time = time
         self.src = src      # src floor of the call
         self.dest = dest    # dest floor of the call
+        self.start = True
 
         if self.src < self.dest:
             self.type = 1   # up call
