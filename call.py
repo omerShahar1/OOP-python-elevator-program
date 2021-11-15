@@ -4,13 +4,10 @@ class Call:
         self.src = src      # src floor of the call
         self.dest = dest    # dest floor of the call
 
-    def type(self):
-        """
-        return 1 if call type is up. 0 otherwise
-        """
-        if(self.src < self.dest):
-            return 1
-        return 0
+        if self.src < self.dest:
+            self.type = 1   # up call
+        else:
+            self.type = -1  # down call
 
 
 

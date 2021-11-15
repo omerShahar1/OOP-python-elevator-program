@@ -11,6 +11,7 @@ class Elevator:
         self.openTime = openTime
         self.startTime = startTime
         self.stopTime = stopTime
+        self.sign = 0    # up=1, down=-1 startMode=0
         self.calls = []  # list of elevator current calls
 
     def add_call(self, call: Call):
