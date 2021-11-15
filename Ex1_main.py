@@ -1,11 +1,12 @@
 import json
 import csv
+import pandas
 from call import Call
 from elevator import Elevator
 from building import Building
 
 
-def best_elevator(b: Building, call: Call):
+def best_elevator(b: Building, call: Call) -> int:
     """
     :param b: the current building
     :param call: the new call we need to address
@@ -261,10 +262,12 @@ def create_down_list(elevator: Elevator) -> list:
     return list
 
 
-if __name__ == '__main__':
-
+def main(a: list):
+    args1 = a[1]
+    args2 = a[2]
+    args3 = a[3]
     # opening JSON file (Building.json) and load it in to a dictionary (data)
-    with open('Building.json') as json_file:
+    with open(args1) as json_file:
         data = json.load(json_file)
         # create building b with the data from the json file
         b = Building(data['_minFloor'], data['_maxFloor'])
@@ -275,17 +278,18 @@ if __name__ == '__main__':
             Building.add_elevator(b, elev)
 
     # open csv file (calls)
-    calls_file = open('Calls_a.csv', 'r')
+    calls_file = open(args2, 'r')
     csv_reader = csv.reader(calls_file)
-
-    with open('output.csv', 'w') as output:
-        csv_writer = csv.writer(output)
-        # go over all the lines in the csv file
-        for row in csv_reader:
-            if b.maxFloor >= int(row[2]) >= b.minFloor and b.maxFloor >= int(row[3]) >= b.minFloor:
-                call = Call(float(row[1]), int(row[2]), int(row[3]))
-                answer = best_elevator(b, call)
-                row[4] = answer
-        csv_writer.writerow(row)
+    output = pandas.read_csv(args3)
+    count = 0
+    # go over all the lines in the csv file
+    for row in csv_reader:
+        if b.maxFloor >= int(row[2]) >= b.minFloor and b.maxFloor >= int(row[3]) >= b.minFloor:
+            call = Call(float(row[1]), int(row[2]), int(row[3]))
+            answer = best_elevator(b, call)
+            row[5] = answer
+        output.loc[count] = row
+        count = count + 1
+    output.to_csv(args3, index=False)
 
     calls_file.close()
