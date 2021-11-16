@@ -13,11 +13,11 @@ class Elevator:
         self.stopTime = stopTime
         self.current = 0
         self.sign = 0    # up=1, down=-1 startMode=0
-        self.time = 0.0
+        self.time = 0.0  #כמה זמן עבר מהתחלת הריצה
         self.calls = []  # list of elevator current calls
-        self.upList = []
-        self.newUpList = []
-        self.downList = []
+        self.upList = []  #איזה קומות המעלית שעולות , נוכחי
+        self.newUpList = [] #לתאר את כל הקומות שנצטרך להגיע והם לא בקריאה הנוכחית, הבאות
+        self.downList = [] #שיורדות
         self.newDownList = []
 
     def zero_data(self):
