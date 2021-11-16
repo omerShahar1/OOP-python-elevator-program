@@ -6,11 +6,11 @@ from elevator import Elevator
 from building import Building
 
 
+# return the id of the best elevator to use. also insert the call to the elevator calls list (and its data to the other lists)
 def best_elevator(b: Building, call: Call) -> int:
     if len(b.elevators) == 1:
         Elevator.add_call(b.elevators[0], call)
         return 0
-
     answer = 0
     bestTime = b.elevators[0].time
 
@@ -21,23 +21,22 @@ def best_elevator(b: Building, call: Call) -> int:
         list4 = elev.newDownList.copy()
 
         elevator_time(elev, call)
+
         if elev.time < bestTime:
             answer = elev.id
             bestTime = elev.time
-        elev.time = 0.0
+        Elevator.zero_data(elev)
         elev.upList = list1.copy()
         elev.downList = list2.copy()
         elev.newUpList = list3.copy()
         elev.newDownList = list4.copy()
-        if len(elev.calls) != 0:
-            b.elevators[answer].sign = b.elevators[answer].calls[0].type
-
 
     # add the new call to the selected elevator calls list and return the elevator number.
-    b.elevators[answer].calls.append(call)
+    Elevator.add_call(b.elevators[answer], call)
     return answer
 
 
+# return the elevator total time to run
 def elevator_time(elevator: Elevator, call: Call):
     if len(elevator.calls) == 0:
         return case_0(elevator, call)
@@ -64,11 +63,12 @@ def case_1_down(elevator: Elevator, call: Call):
 
 def case_2(elevator: Elevator, call: Call):
     if elevator.sign == 1:
-        goUp(elevator, 0.0)
+        goUp(elevator, call)
     else:
-        goDown(elevator, 0.0)
+        goDown(elevator, call)
 
 
+# insert the call data (src and dest) to the correct floors list.
 def insert_floors(elevator: Elevator, call: Call):
     # if the time to insert the call hasn't arrived yet, then stop
     if call.time < elevator.time:
@@ -96,6 +96,7 @@ def insert_floors(elevator: Elevator, call: Call):
     call.start = False
 
 
+# send the elevator down
 def goDown(elevator: Elevator, call: Call):
     elevator.sign = -1
     for floor in elevator.downList:
@@ -103,13 +104,14 @@ def goDown(elevator: Elevator, call: Call):
             insert_floors(elevator, call)
         if len(elevator.upList) == 0:
             Elevator.switch_down_list(elevator)
-            goUp(elevator)
+            goUp(elevator, call)
         if elevator.current != floor:
             move(elevator, elevator.current, floor)
         elevator.current = floor
         elevator.downList.pop(0)
 
 
+# send the elevator up
 def goUp(elevator: Elevator, call: Call):
     elevator.sign = 1
     for floor in elevator.upList:
@@ -117,13 +119,14 @@ def goUp(elevator: Elevator, call: Call):
             insert_floors(elevator, call)
         if len(elevator.upList) == 0:
             Elevator.switch_up_list(elevator)
-            goDown(elevator)
+            goDown(elevator, call)
         if elevator.current != floor:
             move(elevator, elevator.current, floor)
         elevator.current = floor
         elevator.upList.pop(0)
 
 
+# change the time of the elevator as if it moved from one floor to another
 def move(elev: Elevator, current: int, next: int):
     if current > next:
         dist = current - next

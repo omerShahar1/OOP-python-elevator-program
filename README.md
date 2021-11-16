@@ -21,17 +21,10 @@ case 1_up: elevator sign and call type are both up. the src floor of the call is
 case 1_down: elevator sign and call type are both down. the src floor of the call is under the elevator current floor.
            insert the two new floors in the elevator journey down
 
-case 2_up: elevator sign and call type are both up. the src floor of the call is under the elevator current floor.
-           finish the journey up and then go down to the src floor, and then go up to the dest floor.
+case 2: elevator have at least one call. 
 
-case 2_down: elevator sign and call type are both down. the src floor of the call is above the elevator current floor.
-           finish the journey down and then go up to the src floor, and then go down to the dest floor.
 
-case 3_up: elevator sign is down and call type is up.
-           finish the journey down and then go to the src floor, and then go up to the dest floor.
 
-case 3_down: elevator sign is up and call type is down.
-           finish the journey up and then go to the src floor, and then go down to the dest floor.
 
 
 
