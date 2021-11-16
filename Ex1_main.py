@@ -1,5 +1,7 @@
 import json
 import csv
+import sys
+
 import pandas
 from call import Call
 from elevator import Elevator
@@ -41,11 +43,6 @@ def elevator_time(elevator: Elevator, call: Call):
     if len(elevator.calls) == 0:
         return case_0(elevator, call)
 
-    if call.type == 1 and elevator.sign == 1 and call.src > elevator.current:
-        return case_1_up(elevator, call)
-
-    if call.type == -1 and elevator.sign == -1 and call.src < elevator.current:
-        return case_1_down(elevator, call)
     return case_2(elevator, call)
 
 
@@ -53,16 +50,8 @@ def case_0(elevator: Elevator, call: Call):
     pass
 
 
-def case_1_up(elevator: Elevator, call: Call):
-    pass
-
-
-def case_1_down(elevator: Elevator, call: Call):
-    pass
-
-
 def case_2(elevator: Elevator, call: Call):
-    if elevator.sign == 1:
+    if elevator.calls[0].type == 1:
         goUp(elevator, call)
     else:
         goDown(elevator, call)
@@ -135,10 +124,10 @@ def move(elev: Elevator, current: int, next: int):
     elev.time = elev.time + (dist / elev.speed) + elev.startTime + elev.stopTime + elev.closeTime + elev.stopTime
 
 
-def main(a: list):
-    args1 = a[1]
-    args2 = a[2]
-    args3 = a[3]
+if __name__ == '__main__':
+    args1 = sys.argv[1]
+    args2 = sys.argv[2]
+    args3 = sys.argv[3]
     # opening JSON file (Building.json) and load it in to a dictionary (data)
     with open(args1) as json_file:
         data = json.load(json_file)
