@@ -51,7 +51,13 @@ def elevator_time(elevator: Elevator, call: Call):
 
 
 def case_0(elevator: Elevator, call: Call):
-    pass
+    if elevator.current == call.src:
+        elevator.time = elevator.time + elevator.openTime + elevator.closeTime
+        move(elevator, call.src, call.dest)
+    else:
+        elevator.time = elevator.time + elevator.closeTime
+        move(elevator, elevator.current, call.src)
+        move(elevator, call.src, call.dest)
 
 
 def case_1_up(elevator: Elevator, call: Call):
