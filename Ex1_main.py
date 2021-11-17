@@ -1,4 +1,3 @@
-import json
 import csv
 import sys
 from call import Call
@@ -6,8 +5,10 @@ from elevator import Elevator
 from building import Building
 
 
-# return the id of the best elevator to use. also insert the call to the elevator calls list (and its data to the other lists)
 def best_elevator(b: Building, call: Call) -> int:
+    """
+    go over all the elvator in the building and return the id of the elevator who can complete the call in the best time.
+    """
     if len(b.elevators) == 1:
         return 0
     answer = 0
@@ -43,8 +44,10 @@ def best_elevator(b: Building, call: Call) -> int:
     return answer
 
 
-# return the elevator total time to run
 def elevator_time(elevator: Elevator, call: Call):
+    """
+    selector to check the elevator needed way of checking its time to complete calls
+    """
     if len(elevator.calls) == 0:
         return case_0(elevator, call)
 
@@ -52,6 +55,9 @@ def elevator_time(elevator: Elevator, call: Call):
 
 
 def case_0(elevator: Elevator, call: Call):
+    """
+    if elevator has no previous calls then just check the new one from the floor 0 (elevator starting floor)
+    """
     if elevator.current == call.src:
         elevator.time = elevator.time + elevator.openTime + elevator.closeTime
     else:
@@ -63,17 +69,23 @@ def case_0(elevator: Elevator, call: Call):
 
 
 def case_2(elevator: Elevator, call: Call):
+    """
+    elevator at least 1 call. then check the elevator needed direction (first call type) and start moving in this direction.
+    """
     if elevator.calls[0].type == 1:
         goUp(elevator, call)
     else:
         goDown(elevator, call)
 
 
-# insert the call data (src and dest) to the correct floors list.
 def insert_floors(elevator: Elevator, call: Call):
+    """
+    insert the call data (src and dest) to the correct floors list.
+    """
     # if the time to insert the call hasn't arrived yet, then stop
     if call.time < elevator.time:
         return
+
     if call.type == 1:  # if call type up
         if elevator.current > call.src:
             elevator.newUpList.append(call.src)
@@ -97,8 +109,10 @@ def insert_floors(elevator: Elevator, call: Call):
     call.start = False
 
 
-# send the elevator down
 def goDown(elevator: Elevator, call: Call):
+    """
+    simulate the elevator down run. if finished run then insert data to next down run and start go up.
+    """
     elevator.sign = -1
     for floor in elevator.downList:
         if call.start:
@@ -112,8 +126,10 @@ def goDown(elevator: Elevator, call: Call):
         elevator.downList.pop(0)
 
 
-# send the elevator up
 def goUp(elevator: Elevator, call: Call):
+    """
+    simulate the elevator up run. if finished run then insert data to next up run and start go down.
+    """
     elevator.sign = 1
     for floor in elevator.upList:
         if call.start:
@@ -127,8 +143,10 @@ def goUp(elevator: Elevator, call: Call):
         elevator.upList.pop(0)
 
 
-# change the time of the elevator as if it moved from one floor to another
 def move(elev: Elevator, current: int, next: int):
+    """
+    # change the time of the elevator as if it moved from one floor to another
+    """
     if current > next:
         dist = current - next
     else:
