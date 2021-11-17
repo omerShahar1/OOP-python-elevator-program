@@ -157,7 +157,6 @@ def move(elev: Elevator, current: int, next: int):
 args1 = sys.argv[1]
 args2 = sys.argv[2]
 args3 = sys.argv[3]
-# opening JSON file (Building.json) and load it in to a dictionary (data)
 
 b = Building(args1)
 
