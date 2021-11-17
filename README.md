@@ -43,3 +43,10 @@ case 2: elevator have at least one call. in that case we will tell the elevator 
 * when going up do a miror image of the go down scenario.
 * if the call is up type then we will insert its src and dest floors to the upList only if those floors are above the elevator current floor in the given moment. if they arent then we will insert the floors to the newUpList and sort to list from small to big.
 * if the call is down type then we will insert its src and dest floors to the downList only if those floors are under the elevator current floor in the given moment. if they arent then we will insert the floors to the newdownList and sort to list from big to small.
+
+
+
+note:
+the algoritm is based on the idea that the elevator will start the run like ordinary elevator. for example if the first call to reach it was up type then the elevator will start its run by moving up.
+if the elevator recieve new call and it is possible to complete it durring the current run then the elevator would do it. but if the new call is not possible to complete (for example if we go up and the new call src is under us) then the call will have to wait for the next run up.
+the calls for the new run are sorted because the elevator already know them and would prefer to start them from the lowest floor (if it goes up) or from the highest floor (if go down).
