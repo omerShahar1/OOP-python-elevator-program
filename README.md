@@ -1,21 +1,25 @@
 # Ex1_oop_ariel
 
+websites with information about the elevator problem:
+* https://www.youtube.com/watch?app=desktop&v=siqiJAJWUVg
+* https://tedweishiwang.github.io/journal/object-oriented-design-elevator.html
+* https://coderanch.com/t/707819/engineering/Design-Elevator-System
 
 start the program:
 1. we take the strngs with the names of the building.json, the call.csv and the out.csv.
 2. we create Building object and Elevator objects with the json file and create Call objects with the call.csv file.
 3. we go over every line in the calls.csv file, find the best elevator to give by using the best_elevator function and change the value in the out.csv file.
 
-building object:
+Building object:
 * 2 integers as values (min floor and max floor).
 * list of elevator objects (we put in the list only the elevator from the specific json file)
 
-call object:
+Call object:
 * 1 float value (time)
 * 3 integers as values (src and dest floors are the first two. the third is "type" to tell us if the call is up or down)
 * 1 boolean value to tell us if we already inserted the call data (dest and src floors) to the elevator floors lists.
 
-elevator object:
+Elevator object:
 * store all the given data about the elevator (id, speed, minfloor, maxfloor, close time, open time, start time, stop time)
 * integer value called current (current floorr of elevator. start always with 0)
 * integer value called sign (0 if elevator hadnt started moving. 1 if it go up and -1 if down)
