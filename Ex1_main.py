@@ -55,6 +55,7 @@ def elevator_time(elevator: Elevator, call: Call):
 
 
 def case_0(elevator: Elevator, call: Call):
+
     """
     if elevator has no previous calls then just check the new one from the floor 0 (elevator starting floor)
     """
