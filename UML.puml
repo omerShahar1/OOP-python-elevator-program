@@ -1,0 +1,81 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+building "1" <-- "many" elevator
+
+elevator "1" <-- "many" call
+
+Ex1_main "1" <-- "1" building
+
+Ex1_main "1" <-- "many" call
+
+
+class Ex1_main {
+.. Attributes ..
+.. Constructor ..
+.. Methods ..
++best_elevator()
++elevator_time()
++case_0()
++case_2()
++insert_floors()
++goDown()
++goUp()
++move()
+}
+
+class call {
+.. Attributes ..
++time: float
++src: Integer
++dest: Integer
++start: bool
++type: Integer
+.. Constructor ..
++Call(self, time:float, src:int, dest:int)
+.. Methods ..
+}
+
+class building {
+.. Attributes ..
++minFloor: Integer
++maxFloor: Integer
++elevators: list
+.. Constructor ..
++Building(self, building_json: str)
+.. Methods ..
+}
+
+class elevator {
+.. Attributes ..
++id: Integer
++speed: float
++minFloor: Integer
++maxFloor: Integer
++closeTime: Integer
++openTime: Integer
++startTime: float
++stopTime: float
++current: Integer
++sign: Integer
++time: float
++calls: list
++upList: list
++newUpList: list
++downList: list
++newDownList: list
+.. Constructor ..
++Elevator(id: int, speed: float,
+minFloor: int, maxFloor: int,
+closeTime: float, penTime: float,
+startTime: float, stopTime: float)
+.. Methods ..
++zero_data()
++add_call()
++switch_up_list()
++switch_down_list()
+
+}
+
+@enduml
