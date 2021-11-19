@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>Python</ID>
+  <OriginalElement>#C:/Users/Talia/PycharmProjects/Ex1_oop_ariel/building.py</OriginalElement>
+  <nodes>
+    <node x="0.0" y="884.0">building.Building</node>
+    <node x="195.0" y="862.0">call.Call</node>
+    <node x="243.5" y="0.0">typing.Hashable</node>
+    <node x="451.0" y="697.0">elevator.Elevator</node>
+    <node x="199.0" y="106.0">object</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="object" target="typing.Hashable" relationship="INTERFACE">
+      <point x="0.0" y="-270.5" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="building.Building" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-61.5" />
+      <point x="87.5" y="659.5" />
+      <point x="313.0" y="659.5" />
+      <point x="0.0" y="270.5" />
+    </edge>
+    <edge source="call.Call" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-83.5" />
+      <point x="313.0" y="753.2442391799641" />
+      <point x="313.42253072808575" y="753.2442391799641" />
+      <point x="0.42253072808574643" y="269.6238397368111" />
+    </edge>
+    <edge source="elevator.Elevator" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-248.5" />
+      <point x="826.0" y="672.0" />
+      <point x="313.0" y="672.0" />
+      <point x="0.0" y="270.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.7010708401976937" showDependencies="false" x="510.9774596436069" y="457.12724709199847" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+  </Categories>
+</Diagram>
+
