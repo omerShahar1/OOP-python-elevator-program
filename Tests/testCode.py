@@ -13,8 +13,8 @@ class testCode_test(unittest.TestCase):
     call_1 = Call(18.7729931796688, -1, -2)
     call_2 = Call(19.5908696496569, 0, 7)
 
-    build_1 = Building("data\Ex1_input\Ex1_Buildings\B1.json")
-    build_2 = Building("data\Ex1_input\Ex1_Buildings\B2.json")
+    build_1 = Building("..\data\Ex1_input\Ex1_Buildings\B1.json")
+    build_2 = Building("..\data\Ex1_input\Ex1_Buildings\B2.json")
 
     def test_move(self):
         Ex1_main.move(self.elev_1, 1, 2)
