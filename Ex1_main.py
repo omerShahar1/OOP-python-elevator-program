@@ -155,22 +155,23 @@ def move(elev: Elevator, current: int, next: int):
     elev.time = elev.time + (dist / elev.speed) + elev.startTime + elev.stopTime + elev.closeTime + elev.openTime
 
 
-args1 = sys.argv[1]
-args2 = sys.argv[2]
-args3 = sys.argv[3]
+def main_fund():
+    args1 = sys.argv[1]
+    args2 = sys.argv[2]
+    args3 = sys.argv[3]
+    ##args1 = "C:/Users/Talia/IdeaProjects/Ex1_oop_ariel/data/Ex1_input/Ex1_Buildings/B2.json"
+    ##args2 = "C:/Users/Talia/IdeaProjects\\Ex1_oop_ariel\\data\\Ex1_Calls_case_2_b.csv"
+    ##args3 = "C:\\Users\\Talia\\IdeaProjects\\Ex1_oop_ariel\\out\\output_B2_b999499.csv"
+    b = Building(args1)
 
-b = Building(args1)
-
-# open csv file (calls)
-with open(args2, 'r') as calls_file:
-    csv_reader = csv.reader(calls_file)
-    with open(args3, "w", newline='\n') as output:
-        csvWriter = csv.writer(output)
-        # go over all the lines in the csv file
-        for row in csv_reader:
-            call = Call(float(row[1]), int(row[2]), int(row[3]))
-            answer = best_elevator(b, call)
-            row[5] = answer
-            csvWriter.writerow(row)
-
-
+    # open csv file (calls)
+    with open(args2, 'r') as calls_file:
+        csv_reader = csv.reader(calls_file)
+        with open(args3, "w", newline='\n') as output:
+            csvWriter = csv.writer(output)
+            # go over all the lines in the csv file
+            for row in csv_reader:
+                call = Call(float(row[1]), int(row[2]), int(row[3]))
+                answer = best_elevator(b, call)
+                row[5] = answer
+                csvWriter.writerow(row)

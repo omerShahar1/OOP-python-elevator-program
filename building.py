@@ -4,6 +4,7 @@ from elevator import Elevator
 
 class Building:
     def __init__(self, building_json):
+
         with open(building_json, "r") as f:
             reader = json.load(f)
             self.minFloor = reader["_minFloor"]
