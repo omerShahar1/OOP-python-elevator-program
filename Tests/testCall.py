@@ -26,5 +26,12 @@ class testCall_test(unittest.TestCase):
         self.assertEqual(self.call_4.src, 0)
         self.assertEqual(self.call_5.src, 0)
 
+    def test_dest(self):
+        self.assertEqual(self.call_1.dest, -1)
+        self.assertEqual(self.call_2.dest, -1)
+        self.assertEqual(self.call_3.dest, -2)
+        self.assertEqual(self.call_4.dest, 7)
+        self.assertEqual(self.call_5.dest, 7)
+
 if __name__ == '__main__':
     unittest.main()
