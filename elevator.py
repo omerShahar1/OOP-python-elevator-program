@@ -12,6 +12,7 @@ class Elevator:
         self.openTime = openTime
         self.startTime = startTime
         self.stopTime = stopTime
+
         self.current = 0  # current floor of the elevator
         self.sign = 0  # up=1, down=-1 startMode=0
         self.time = 0.0  # how much time passed since the elevator started moving
@@ -20,6 +21,7 @@ class Elevator:
         self.newUpList = []  # list of floors the elevator need to reach in the next time it goes up
         self.downList = []  # list of floors the elevator need to reach while going down
         self.newDownList = []  # list of floors the elevator need to reach in the next time it goes down
+
 
     def zero_data(self):  # zero out all the data (make the elevator looks like it just now starting to move)
         self.current = 0

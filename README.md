@@ -5,6 +5,7 @@ websites with information about the elevator problem:
 * https://tedweishiwang.github.io/journal/object-oriented-design-elevator.html
 * https://coderanch.com/t/707819/engineering/Design-Elevator-System
 
+
 start the program:
 1. we take the strngs with the names of the building.json, the call.csv and the out.csv.
 2. we create Building object and Elevator objects with the json file and create Call objects with the call.csv file.
@@ -34,6 +35,10 @@ Elevator object:
 * switch_down_list: same as the swich_up_list but for down runs.
 
 
+* Best_elevator(): receive the new call and building. Return the id of the elevator with the best time:
+    * If the building have only 1 elevator, return the id of the elevator.
+    * if the building have more than 1 elevator, go over all the elevators and return the id of the best one.
+
 how we choose the best elevator?
 * we will go over every elevator and check the time it will take it to complete the new call with all its previus calls.
 * after finding the elevator, return its id and add the new call to its call list.
@@ -47,8 +52,6 @@ case 2: elevator have at least one call. in that case we will tell the elevator 
 * when going up do a miror image of the go down scenario.
 * if the call is up type then we will insert its src and dest floors to the upList only if those floors are above the elevator current floor in the given moment. if they arent then we will insert the floors to the newUpList and sort to list from small to big.
 * if the call is down type then we will insert its src and dest floors to the downList only if those floors are under the elevator current floor in the given moment. if they arent then we will insert the floors to the newdownList and sort to list from big to small.
-
-
 
 note:
 the algoritm is based on the idea that the elevator will start the run like ordinary elevator. for example if the first call to reach it was up type then the elevator will start its run by moving up.
